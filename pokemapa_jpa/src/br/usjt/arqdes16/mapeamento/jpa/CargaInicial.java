@@ -1,0 +1,95 @@
+package br.usjt.arqdes16.mapeamento.jpa;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import br.usjt.arqdes16.mapeamento.dao.CidadeDAO;
+import br.usjt.arqdes16.mapeamento.dao.EstadoDAO;
+import br.usjt.arqdes16.mapeamento.dao.LocalDAO;
+import br.usjt.arqdes16.mapeamento.dao.TipoDAO;
+import br.usjt.arqdes16.mapeamento.dao.UsuarioDAO;
+import br.usjt.arqdes16.mapeamento.model.Cidade;
+import br.usjt.arqdes16.mapeamento.model.Estado;
+import br.usjt.arqdes16.mapeamento.model.Local;
+import br.usjt.arqdes16.mapeamento.model.Tipo;
+import br.usjt.arqdes16.mapeamento.model.Usuario;
+
+public class CargaInicial {
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("pokemapa");
+		EntityManager manager = factory.createEntityManager();
+		CidadeDAO cidadeDAO = new CidadeDAO(manager);
+		EstadoDAO estadoDAO = new EstadoDAO(manager);
+		LocalDAO localDAO = new LocalDAO(manager);
+		TipoDAO tipoDAO = new TipoDAO(manager);
+		UsuarioDAO usuarioDAO = new UsuarioDAO(manager);
+		Tipo tipo = new Tipo();
+		tipo.setNome("ginásio");
+		Tipo tipo1 = new Tipo();
+		tipo1.setNome("pokestop");
+		Estado uf = new Estado();
+		uf.setId("SP");
+		uf.setNome("São Paulo");
+		Cidade cidade = new Cidade();
+		cidade.setNome("São Paulo");
+		cidade.setUf(uf);
+		Estado uf2 = new Estado();
+		uf2.setId("RJ");
+		uf2.setNome("Rio de Janeiro");
+		Estado uf3 = new Estado();
+		uf3.setId("DF");
+		uf3.setNome("Distrito Federal");
+		Cidade cidade1 = new Cidade();
+		cidade1.setNome("Rio de Janeiro");
+		cidade1.setUf(uf2);
+		Cidade cidade2 = new Cidade();
+		cidade2.setNome("Brasília");
+		cidade2.setUf(uf3);
+		Cidade cidade3 = new Cidade();
+		cidade3.setNome("Santo André");
+		cidade3.setUf(uf);
+		Local local = new Local();
+		local.setNome("Capela São Judas Tadeu");
+		local.setLatitude(-23.551641);
+		local.setLongitude(-46.597417);
+		local.setTipo(tipo);
+		local.setCidade(cidade);
+		Local local1 = new Local();
+		local1.setNome("Alberto Mesquista de Camargo");
+		local1.setLatitude(-23.552166);
+		local1.setLongitude(-46.597626);
+		local1.setTipo(tipo);
+		local1.setCidade(cidade);
+		Local local2 = new Local();
+		local2.setNome("Estátua Fundador São Judas Tadeu");
+		local2.setLatitude(-23.551622);
+		local2.setLongitude(-46.597847);
+		local2.setTipo(tipo);
+		local2.setCidade(cidade);
+		Usuario usuario = new Usuario();
+		usuario.setUsername("admin@usjt.br");
+		usuario.setPassword("usjt2016");
+		manager.getTransaction().begin();
+		estadoDAO.criar(uf);
+		estadoDAO.criar(uf2);
+		estadoDAO.criar(uf3);
+		cidadeDAO.criar(cidade);
+		cidadeDAO.criar(cidade1);
+		cidadeDAO.criar(cidade2);
+		cidadeDAO.criar(cidade3);
+		tipoDAO.criar(tipo);
+		tipoDAO.criar(tipo1);
+		localDAO.criar(local);
+		localDAO.criar(local1);
+		localDAO.criar(local2);
+		usuarioDAO.criar(usuario);
+		manager.getTransaction().commit();
+		List<Local> lista = localDAO.selecionarTodas();
+		for (Local localLista : lista) {
+			System.out.println(localLista);
+		}
+		manager.close();
+		factory.close();
+	}
+}
