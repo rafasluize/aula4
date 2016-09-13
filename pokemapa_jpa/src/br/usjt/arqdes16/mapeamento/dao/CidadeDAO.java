@@ -26,8 +26,8 @@ public class CidadeDAO {
 	public Cidade selecionar(int id) {
 		return manager.find(Cidade.class, id);
 	}
-
-	public List<?> selecionarTodas() {
+	@SuppressWarnings("unchecked")
+	public List<Cidade> selecionarTodas() {
 		return manager.createQuery("select * from cidade").getResultList();
 	}
 }

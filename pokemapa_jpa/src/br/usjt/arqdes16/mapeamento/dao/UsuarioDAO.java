@@ -28,7 +28,8 @@ public class UsuarioDAO {
 		return manager.find(Usuario.class, id);
 	}
 
-	public List<?> selecionarTodas() {
+	@SuppressWarnings("unchecked")
+	public List<Usuario> selecionarTodas() {
 		return manager.createQuery("select u from Usuario u").getResultList();
 	}
 }

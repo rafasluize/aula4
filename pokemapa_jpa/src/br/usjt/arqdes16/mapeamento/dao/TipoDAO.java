@@ -26,8 +26,8 @@ public class TipoDAO {
 	public Tipo selecionar(int id) {
 		return manager.find(Tipo.class, id);
 	}
-
-	public List<?> selecionarTodas() {
+	@SuppressWarnings("unchecked")
+	public List<Tipo> selecionarTodas() {
 		return manager.createQuery("select t from Tipo t").getResultList();
 	}
 }

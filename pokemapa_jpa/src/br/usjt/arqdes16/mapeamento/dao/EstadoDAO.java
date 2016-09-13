@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import br.usjt.arqdes16.mapeamento.model.Cidade;
 import br.usjt.arqdes16.mapeamento.model.Estado;
 
 public class EstadoDAO {
@@ -29,7 +30,8 @@ public class EstadoDAO {
 		return manager.find(Estado.class, id);
 	}
 
-	public List<?> selecionarTodas() {
+	@SuppressWarnings("unchecked")
+	public List<Estado> selecionarTodas() {
 		return manager.createQuery("select uf from Estado uf").getResultList();
 	}
 }
