@@ -2,9 +2,11 @@ package br.usjt.arqdes16.mapeamento.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+
 import br.usjt.arqdes16.mapeamento.model.Local;
 
 public class LocalDAO {
+
 	EntityManager manager;
 
 	public LocalDAO(EntityManager manager) {
